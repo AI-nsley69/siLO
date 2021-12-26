@@ -1,7 +1,8 @@
 #!/bin/bash
 threshold_temp="70" # Minimum temperature before fan rampage
 max_temp="90" # Maximum temperature
-default_speed="15" # In percentage
+default_speed="15" # In percentage 
+max_speed="70" # In percentage
 host="Administrator@192.168.86.99" # ssh host for iLO
 
 check_temp() {
@@ -14,7 +15,7 @@ check_temp() {
 calculate_speed() {
         temp=$(check_temp)
         if [ $(( "$temp" )) -gt "$threshold_temp" ]; then
-                fan_speed=$(echo "$threshold_temp / max_temp * 255 / 100" | bc)
+                fan_speed=$(echo "$threshold_temp / max_temp * ($max_speed / 100) * 255 / 100" | bc)
                 echo "$fan_speed"
         else
                 fan_speed=$(( "$default_speed * 255 / 100" ))

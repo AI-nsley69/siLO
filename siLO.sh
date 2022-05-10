@@ -15,7 +15,7 @@ check_temp() {
 calculate_speed() {
         temp=$(check_temp)
         if [ $(( "$temp" )) -gt "$threshold_temp" ]; then
-                fan_speed=$(echo "$threshold_temp / max_temp * ($max_speed / 100) * 255 / 100" | bc)
+                fan_speed=$(echo "$threshold_temp / $max_temp * ($max_speed / 100) * 255 / 100" | bc)
                 echo "$fan_speed"
         else
                 fan_speed=$(( "$default_speed * 255 / 100" ))
